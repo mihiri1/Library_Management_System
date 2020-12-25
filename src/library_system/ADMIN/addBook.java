@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import library_system.dbConnection;
-import library_system.loginForm;
+import library_system.Login;
 
 /**
  *
@@ -69,6 +69,10 @@ public class addBook extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         Price = new javax.swing.JTextField();
         jSeparator24 = new javax.swing.JSeparator();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        state = new javax.swing.JTextField();
+        jSeparator25 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -224,6 +228,25 @@ public class addBook extends javax.swing.JFrame {
         jPanel1.add(Price, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 190, 20));
         jPanel1.add(jSeparator24, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 200, 190, 10));
 
+        jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Sugees24.png"))); // NOI18N
+        jPanel1.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("State");
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, -1, -1));
+
+        state.setBackground(new java.awt.Color(16, 13, 29));
+        state.setForeground(new java.awt.Color(255, 255, 255));
+        state.setBorder(null);
+        state.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(state, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 190, 20));
+        jPanel1.add(jSeparator25, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, 190, 10));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 460));
 
         pack();
@@ -235,7 +258,7 @@ public class addBook extends javax.swing.JFrame {
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
         // TODO add your handling code here:
-        loginForm obj=new loginForm();
+        MenuAdmin obj=new MenuAdmin();
         obj.setVisible(true);
         obj.pack();
         obj.setLocationRelativeTo(null);
@@ -278,14 +301,18 @@ public class addBook extends javax.swing.JFrame {
             String Pyear =publishedYear.getText();
             String price =Price.getText();
             String description =Description.getText();
+            String State=state.getText();
             
-            String query="insert into BOOK(bookName,author,publishedYear,price,description)values(?,?,?,?,?)";
+            String query="insert into BOOK(bookName,author,publishedYear,price,description,state)values(?,?,?,?,?,?)";
             pst =conn.prepareStatement (query);
             pst.setString(1, Bname);
             pst.setString(2, author);
             pst.setString(3, Pyear);
             pst.setString(4, price);
-            pst.setString(5, description); if(pst.executeUpdate() !=0){
+            pst.setString(5, description); 
+            pst.setString(6, State);
+            
+            if(pst.executeUpdate() !=0){
                 JOptionPane.showMessageDialog(this,"Book Register Success");
                 
             }
@@ -297,6 +324,10 @@ public class addBook extends javax.swing.JFrame {
         }
             
     }//GEN-LAST:event_addBookMouseClicked
+
+    private void stateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -344,6 +375,7 @@ public class addBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
@@ -352,14 +384,17 @@ public class addBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator22;
     private javax.swing.JSeparator jSeparator23;
     private javax.swing.JSeparator jSeparator24;
+    private javax.swing.JSeparator jSeparator25;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField publishedYear;
+    private javax.swing.JTextField state;
     // End of variables declaration//GEN-END:variables
 }

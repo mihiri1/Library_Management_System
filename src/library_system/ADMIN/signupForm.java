@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import library_system.dbConnection;
-import library_system.loginForm;
+import library_system.Login;
 
 /**
  *
@@ -79,8 +79,15 @@ public class signupForm extends javax.swing.JFrame {
         jSeparator25 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        accounttype = new javax.swing.JComboBox<>();
+        txtSecQ = new javax.swing.JComboBox<>();
         password = new javax.swing.JPasswordField();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        txtAnswer = new javax.swing.JTextField();
+        jSeparator27 = new javax.swing.JSeparator();
+        accounttype = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -135,11 +142,11 @@ public class signupForm extends javax.swing.JFrame {
                 SignupBtnMouseClicked(evt);
             }
         });
-        jPanel1.add(SignupBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 420, 80, 30));
+        jPanel1.add(SignupBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 450, 80, 30));
 
         jLabel20.setForeground(new java.awt.Color(153, 153, 153));
         jLabel20.setText("Already have an Account?Click Here");
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 210, -1));
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 460, 210, -1));
 
         jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-male-user-24.png"))); // NOI18N
         jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, -1, -1));
@@ -276,15 +283,46 @@ public class signupForm extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 30, -1));
 
-        accounttype.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        accounttype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Admin", "User" }));
-        jPanel1.add(accounttype, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 190, 30));
+        txtSecQ.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtSecQ.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "what is your Childhood nick name?", "what is your pet name?", "your Favourite Teacher?", "Your Best Friend name?" }));
+        jPanel1.add(txtSecQ, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, 190, 30));
 
         password.setBackground(new java.awt.Color(16, 13, 29));
         password.setBorder(null);
         jPanel1.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, 190, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 460));
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Security question");
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 380, -1, -1));
+
+        jLabel54.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/address.png"))); // NOI18N
+        jPanel1.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, -1, -1));
+
+        jLabel55.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Question.png"))); // NOI18N
+        jPanel1.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 380, -1, -1));
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Answer");
+        jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, -1, 30));
+
+        txtAnswer.setBackground(new java.awt.Color(16, 13, 29));
+        txtAnswer.setForeground(new java.awt.Color(255, 255, 255));
+        txtAnswer.setBorder(null);
+        txtAnswer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAnswerActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtAnswer, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 190, 20));
+        jPanel1.add(jSeparator27, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 190, 10));
+
+        accounttype.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        accounttype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Admin", "User" }));
+        jPanel1.add(accounttype, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 190, 30));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -325,7 +363,7 @@ public class signupForm extends javax.swing.JFrame {
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
         // TODO add your handling code here:
-        loginForm obj=new loginForm();
+        MenuAdmin obj=new MenuAdmin();
         obj.setVisible(true);
         obj.pack();
         obj.setLocationRelativeTo(null);
@@ -345,17 +383,22 @@ public class signupForm extends javax.swing.JFrame {
             String Eaddress =email.getText();
             String Atype =(String) accounttype.getSelectedItem();
             String Password = password.getText();
+            String secQ =(String) txtSecQ.getSelectedItem();
+            String answer =txtAnswer.getText();
             
-            String query="insert into USER(firstName,lastName,email,address,accountType,phoneNumber,userName,password)values(?,?,?,?,?,?,?,?)";
+            String query="insert into USER(firstName,lastName,email,address,accountType,phoneNumber,userName,password,secQ,answer)values(?,?,?,?,?,?,?,?,?,?)";
             pst =conn.prepareStatement(query);
             pst.setString(1, Fname);
             pst.setString(2, Lname);
-            pst.setString(3, Address);
-            pst.setString(4, Pnumber);
+            pst.setString(3, Eaddress);
+            pst.setString(4, Address);
             pst.setString(5, Atype);
-            pst.setString(6, Eaddress);
+            pst.setString(6, Pnumber);
             pst.setString(7, Uname);
             pst.setString(8, Password);
+            pst.setString(9, secQ);
+            pst.setString(10,answer);
+            
             
             if(pst.executeUpdate() !=0){
                 JOptionPane.showMessageDialog(this,"User Register Success");
@@ -369,6 +412,10 @@ public class signupForm extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(this, "Username already exist");
         }
     }//GEN-LAST:event_SignupBtnMouseClicked
+
+    private void txtAnswerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnswerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAnswerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -417,10 +464,12 @@ public class signupForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
@@ -430,6 +479,8 @@ public class signupForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -439,11 +490,14 @@ public class signupForm extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator23;
     private javax.swing.JSeparator jSeparator24;
     private javax.swing.JSeparator jSeparator25;
+    private javax.swing.JSeparator jSeparator27;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField lastname;
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField phonenumber;
+    private javax.swing.JTextField txtAnswer;
+    private javax.swing.JComboBox<String> txtSecQ;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

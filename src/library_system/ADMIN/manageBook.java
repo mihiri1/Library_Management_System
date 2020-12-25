@@ -9,14 +9,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import library_system.dbConnection;
-import library_system.loginForm;
+import library_system.Login;
 
 /**
  *
@@ -143,6 +145,11 @@ public class manageBook extends javax.swing.JFrame {
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icon close.png"))); // NOI18N
         jLabel19.setText(" Delete");
         jLabel19.setOpaque(true);
+        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel19MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 440, 90, 30));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -308,6 +315,11 @@ public class manageBook extends javax.swing.JFrame {
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/signup.png"))); // NOI18N
         jLabel21.setText(" Update");
         jLabel21.setOpaque(true);
+        jLabel21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel21MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 440, 90, 30));
 
         bookIdSearch.setBackground(new java.awt.Color(16, 13, 29));
@@ -357,7 +369,7 @@ public class manageBook extends javax.swing.JFrame {
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
         // TODO add your handling code here:
-        loginForm obj=new loginForm();
+        MenuAdmin obj=new MenuAdmin();
         obj.setVisible(true);
         obj.pack();
         obj.setLocationRelativeTo(null);
@@ -437,6 +449,49 @@ public class manageBook extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
+     try {
+            // TODO add your handling code here:
+           Statement pst1=conn.createStatement();
+           pst1.executeUpdate("UPDATE BOOK SET bookName='"+jTextFieldbName.getText()
+                   +"',author='"+jTextFieldauthor.getText()+"',publishedYear='"+jTextFieldyear.getText()+"',price='"
+                   +jTextFieldprice.getText()+"',description='"+ jTextFieldDescription.getText()+"' where bookID='"+bookIdSearch.getText()+"'");
+             JOptionPane.showMessageDialog(this, "Customer Upadate Successfully");
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(manageBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+     
+     
+    }//GEN-LAST:event_jLabel21MouseClicked
+
+    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+        // TODO add your handling code here:
+           try {
+         Statement pst=conn.createStatement();
+
+           
+            
+              pst.executeUpdate("DELETE FROM BOOK WHERE bookID='"+bookIdSearch.getText()+"'");
+  
+
+            
+            // pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Delete succsessful");
+            jTextFieldbName.setText(" ");
+            jTextFieldauthor.setText(" ");
+             jTextFieldyear.setText(" ");
+             jTextFieldprice.setText(" ");
+             jTextFieldDescription.setText(" ");
+            
+          
+          
+        } catch (SQLException ex) {
+            Logger.getLogger(manageBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel19MouseClicked
 
     /**
      * @param args the command line arguments

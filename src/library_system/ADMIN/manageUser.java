@@ -5,8 +5,18 @@
  */
 package library_system.ADMIN;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
-import library_system.loginForm;
+import javax.swing.JOptionPane;
+import library_system.USER.editProfile;
+import library_system.dbConnection;
+import library_system.Login;
 
 /**
  *
@@ -17,8 +27,12 @@ public class manageUser extends javax.swing.JFrame {
     /**
      * Creates new form manageUser
      */
+     Connection conn=null;
+    PreparedStatement pst=null;
+    ResultSet rs=null;
     public manageUser() {
         initComponents();
+        conn=dbConnection.ConnecrDb();
     }
 
     /**
@@ -35,43 +49,43 @@ public class manageUser extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
-        jTextField7 = new javax.swing.JTextField();
+        jTextFielduname = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        jTextFieldemail = new javax.swing.JTextField();
         jSeparator9 = new javax.swing.JSeparator();
         jLabel48 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        jTextFieldacctype = new javax.swing.JTextField();
         jSeparator20 = new javax.swing.JSeparator();
         jLabel49 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField21 = new javax.swing.JTextField();
+        jTextFieldpass = new javax.swing.JTextField();
         jSeparator21 = new javax.swing.JSeparator();
         jLabel50 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField22 = new javax.swing.JTextField();
+        jTextFieldfname = new javax.swing.JTextField();
         jSeparator22 = new javax.swing.JSeparator();
         jLabel51 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField23 = new javax.swing.JTextField();
+        jTextFieldlname = new javax.swing.JTextField();
         jSeparator23 = new javax.swing.JSeparator();
         jLabel52 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jTextField24 = new javax.swing.JTextField();
+        jTextFieldaddress = new javax.swing.JTextField();
         jSeparator24 = new javax.swing.JSeparator();
         jLabel53 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jTextField25 = new javax.swing.JTextField();
+        jTextFieldphone = new javax.swing.JTextField();
         jSeparator25 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel24 = new javax.swing.JLabel();
 
@@ -98,15 +112,15 @@ public class manageUser extends javax.swing.JFrame {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, -1));
         jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 190, 10));
 
-        jTextField7.setBackground(new java.awt.Color(16, 13, 29));
-        jTextField7.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField7.setBorder(null);
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        jTextFielduname.setBackground(new java.awt.Color(16, 13, 29));
+        jTextFielduname.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFielduname.setBorder(null);
+        jTextFielduname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                jTextFieldunameActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 190, 20));
+        jPanel1.add(jTextFielduname, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 190, 20));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/back.png"))); // NOI18N
         jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -123,6 +137,11 @@ public class manageUser extends javax.swing.JFrame {
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/signup.png"))); // NOI18N
         jLabel19.setText("Update");
         jLabel19.setOpaque(true);
+        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel19MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 420, 80, 30));
 
         jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8-male-user-24.png"))); // NOI18N
@@ -136,15 +155,15 @@ public class manageUser extends javax.swing.JFrame {
         jLabel8.setText("Email Address");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, -1, 20));
 
-        jTextField9.setBackground(new java.awt.Color(16, 13, 29));
-        jTextField9.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField9.setBorder(null);
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldemail.setBackground(new java.awt.Color(16, 13, 29));
+        jTextFieldemail.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldemail.setBorder(null);
+        jTextFieldemail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
+                jTextFieldemailActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 190, 20));
+        jPanel1.add(jTextFieldemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 190, 20));
         jPanel1.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 250, 190, 10));
 
         jLabel48.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/accounttype.png"))); // NOI18N
@@ -155,15 +174,15 @@ public class manageUser extends javax.swing.JFrame {
         jLabel9.setText("Account Type");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 270, -1, -1));
 
-        jTextField13.setBackground(new java.awt.Color(16, 13, 29));
-        jTextField13.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField13.setBorder(null);
-        jTextField13.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldacctype.setBackground(new java.awt.Color(16, 13, 29));
+        jTextFieldacctype.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldacctype.setBorder(null);
+        jTextFieldacctype.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField13ActionPerformed(evt);
+                jTextFieldacctypeActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField13, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 190, 20));
+        jPanel1.add(jTextFieldacctype, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 190, 20));
         jPanel1.add(jSeparator20, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 190, 10));
 
         jLabel49.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/lock.png"))); // NOI18N
@@ -174,15 +193,15 @@ public class manageUser extends javax.swing.JFrame {
         jLabel12.setText("Password");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 330, -1, -1));
 
-        jTextField21.setBackground(new java.awt.Color(16, 13, 29));
-        jTextField21.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField21.setBorder(null);
-        jTextField21.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldpass.setBackground(new java.awt.Color(16, 13, 29));
+        jTextFieldpass.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldpass.setBorder(null);
+        jTextFieldpass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField21ActionPerformed(evt);
+                jTextFieldpassActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField21, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, 190, 20));
+        jPanel1.add(jTextFieldpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, 190, 20));
         jPanel1.add(jSeparator21, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, 190, 20));
 
         jLabel50.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/firstname.png"))); // NOI18N
@@ -193,15 +212,15 @@ public class manageUser extends javax.swing.JFrame {
         jLabel13.setText("First Name");
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, -1, -1));
 
-        jTextField22.setBackground(new java.awt.Color(16, 13, 29));
-        jTextField22.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField22.setBorder(null);
-        jTextField22.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldfname.setBackground(new java.awt.Color(16, 13, 29));
+        jTextFieldfname.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldfname.setBorder(null);
+        jTextFieldfname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField22ActionPerformed(evt);
+                jTextFieldfnameActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField22, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 190, 20));
+        jPanel1.add(jTextFieldfname, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 190, 20));
         jPanel1.add(jSeparator22, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 190, 10));
 
         jLabel51.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/firstname.png"))); // NOI18N
@@ -212,15 +231,15 @@ public class manageUser extends javax.swing.JFrame {
         jLabel15.setText("Last Name");
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, -1, -1));
 
-        jTextField23.setBackground(new java.awt.Color(16, 13, 29));
-        jTextField23.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField23.setBorder(null);
-        jTextField23.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldlname.setBackground(new java.awt.Color(16, 13, 29));
+        jTextFieldlname.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldlname.setBorder(null);
+        jTextFieldlname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField23ActionPerformed(evt);
+                jTextFieldlnameActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField23, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 190, 20));
+        jPanel1.add(jTextFieldlname, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 190, 20));
         jPanel1.add(jSeparator23, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 190, 10));
 
         jLabel52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/address.png"))); // NOI18N
@@ -231,15 +250,15 @@ public class manageUser extends javax.swing.JFrame {
         jLabel17.setText("Address");
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, -1, -1));
 
-        jTextField24.setBackground(new java.awt.Color(16, 13, 29));
-        jTextField24.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField24.setBorder(null);
-        jTextField24.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldaddress.setBackground(new java.awt.Color(16, 13, 29));
+        jTextFieldaddress.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldaddress.setBorder(null);
+        jTextFieldaddress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField24ActionPerformed(evt);
+                jTextFieldaddressActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField24, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 190, 20));
+        jPanel1.add(jTextFieldaddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 190, 20));
         jPanel1.add(jSeparator24, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 190, 10));
 
         jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/phone..png"))); // NOI18N
@@ -250,15 +269,15 @@ public class manageUser extends javax.swing.JFrame {
         jLabel22.setText("Phone Number");
         jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 327, -1, 30));
 
-        jTextField25.setBackground(new java.awt.Color(16, 13, 29));
-        jTextField25.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField25.setBorder(null);
-        jTextField25.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldphone.setBackground(new java.awt.Color(16, 13, 29));
+        jTextFieldphone.setForeground(new java.awt.Color(255, 255, 255));
+        jTextFieldphone.setBorder(null);
+        jTextFieldphone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField25ActionPerformed(evt);
+                jTextFieldphoneActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField25, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 190, 20));
+        jPanel1.add(jTextFieldphone, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 190, 20));
         jPanel1.add(jSeparator25, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, 190, 10));
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -288,6 +307,11 @@ public class manageUser extends javax.swing.JFrame {
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icon close.png"))); // NOI18N
         jLabel21.setText(" Delete");
         jLabel21.setOpaque(true);
+        jLabel21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel21MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 420, 90, 30));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -295,18 +319,23 @@ public class manageUser extends javax.swing.JFrame {
         jLabel7.setText("Search Here");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
 
-        jTextField8.setBackground(new java.awt.Color(16, 13, 29));
-        jTextField8.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField8.setBorder(null);
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        txtSearch.setBackground(new java.awt.Color(16, 13, 29));
+        txtSearch.setForeground(new java.awt.Color(255, 255, 255));
+        txtSearch.setBorder(null);
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                txtSearchActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 190, 20));
+        jPanel1.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 190, 20));
         jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, 190, 10));
 
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/searchbook.png"))); // NOI18N
+        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel24MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 60, -1, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 460));
@@ -314,13 +343,13 @@ public class manageUser extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void jTextFieldunameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldunameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_jTextFieldunameActionPerformed
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
         // TODO add your handling code here:
-        loginForm obj=new loginForm();
+        MenuAdmin obj=new MenuAdmin();
         obj.setVisible(true);
         obj.pack();
         obj.setLocationRelativeTo(null);
@@ -329,33 +358,33 @@ public class manageUser extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel16MouseClicked
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+    private void jTextFieldemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldemailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
+    }//GEN-LAST:event_jTextFieldemailActionPerformed
 
-    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
+    private void jTextFieldacctypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldacctypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField13ActionPerformed
+    }//GEN-LAST:event_jTextFieldacctypeActionPerformed
 
-    private void jTextField21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField21ActionPerformed
+    private void jTextFieldpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldpassActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField21ActionPerformed
+    }//GEN-LAST:event_jTextFieldpassActionPerformed
 
-    private void jTextField22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField22ActionPerformed
+    private void jTextFieldfnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldfnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField22ActionPerformed
+    }//GEN-LAST:event_jTextFieldfnameActionPerformed
 
-    private void jTextField23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField23ActionPerformed
+    private void jTextFieldlnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldlnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField23ActionPerformed
+    }//GEN-LAST:event_jTextFieldlnameActionPerformed
 
-    private void jTextField24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField24ActionPerformed
+    private void jTextFieldaddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldaddressActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField24ActionPerformed
+    }//GEN-LAST:event_jTextFieldaddressActionPerformed
 
-    private void jTextField25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField25ActionPerformed
+    private void jTextFieldphoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldphoneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField25ActionPerformed
+    }//GEN-LAST:event_jTextFieldphoneActionPerformed
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
@@ -367,9 +396,88 @@ public class manageUser extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jLabel3MouseClicked
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+        // TODO add your handling code here:
+         try {
+            // TODO add your handling code here:
+           Statement pst1=conn.createStatement();
+           pst1.executeUpdate("UPDATE USER SET firstName='"+jTextFieldfname.getText()
+                   +"',lastName='"+jTextFieldlname.getText()+"',address='"+jTextFieldaddress.getText()+"',phoneNumber='"
+                   +jTextFieldphone.getText()+"',userName='"+ jTextFielduname.getText()+"',email='"+ jTextFieldemail.getText()+"',accountType='"+ jTextFieldacctype.getText()+"',password='"+ jTextFieldpass.getText()+"' where userID='"+txtSearch.getText()+"'");
+             JOptionPane.showMessageDialog(this, "User Upadate Successfully");
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(manageBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }//GEN-LAST:event_jLabel19MouseClicked
+
+    private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
+        // TODO add your handling code here:
+         String query="select * from USER where userID=?";
+        String search =txtSearch.getText();
+        
+        try {
+            pst=conn.prepareStatement(query);
+            pst.setString(1, search);
+            rs=pst.executeQuery();
+            
+            if(rs.next()){
+                String fName=rs.getString("firstName");
+                jTextFieldfname.setText(fName);
+                String lName=rs.getString("lastName");
+                jTextFieldlname.setText(lName);
+                String Address=rs.getString("address");
+                jTextFieldaddress.setText(Address);
+                String phone=rs.getString("phoneNumber");
+                jTextFieldphone.setText(phone);
+                String userName=rs.getString("userName");
+                jTextFielduname.setText(userName);
+                String Email=rs.getString("email");
+                jTextFieldemail.setText(Email);
+                String Acctype=rs.getString("accountType");
+                jTextFieldacctype.setText(Acctype);
+                String Password=rs.getString("password");
+                jTextFieldpass.setText(Password);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(manageUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jLabel24MouseClicked
+
+    private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
+        // TODO add your handling code here:
+         try {
+         Statement pst=conn.createStatement();
+
+           
+            
+              pst.executeUpdate("DELETE FROM BOOK WHERE userID='"+txtSearch.getText()+"'");
+              
+
+            
+            // pst.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Delete succsessful");
+             jTextFieldfname.setText(" ");
+             jTextFieldlname.setText(" ");
+             jTextFieldaddress.setText(" ");
+             jTextFieldphone.setText(" ");
+             jTextFielduname.setText(" ");
+             jTextFieldacctype.setText(" ");
+             jTextFieldpass.setText(" ");
+            
+            
+          
+          
+        } catch (SQLException ex) {
+            Logger.getLogger(manageBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabel21MouseClicked
 
     /**
      * @param args the command line arguments
@@ -442,14 +550,14 @@ public class manageUser extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField21;
-    private javax.swing.JTextField jTextField22;
-    private javax.swing.JTextField jTextField23;
-    private javax.swing.JTextField jTextField24;
-    private javax.swing.JTextField jTextField25;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTextFieldacctype;
+    private javax.swing.JTextField jTextFieldaddress;
+    private javax.swing.JTextField jTextFieldemail;
+    private javax.swing.JTextField jTextFieldfname;
+    private javax.swing.JTextField jTextFieldlname;
+    private javax.swing.JTextField jTextFieldpass;
+    private javax.swing.JTextField jTextFieldphone;
+    private javax.swing.JTextField jTextFielduname;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }
